@@ -9,6 +9,10 @@ type NoteService struct {
 	Repo *repositories.NoteRepository
 }
 
+func NewNoteService(repo *repositories.NoteRepository) *NoteService {
+	return &NoteService{Repo: repo}
+}
+
 func (s *NoteService) Create(note *models.Note) error {
 	return s.Repo.Create(note)
 }

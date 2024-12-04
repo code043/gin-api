@@ -1,13 +1,28 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/code043/gin-api/handlers"
+	"github.com/code043/gin-api/models"
+	"github.com/code043/gin-api/repositories"
+	"github.com/code043/gin-api/routes"
+	"github.com/code043/gin-api/services"
+	"github.com/gin-gonic/gin"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+)
 
 func main() {
-	router := gin.Default()
-	router.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{
-			"msg": "Gin",
-		})
-	})
-	router.Run(":3000")
+	db, err := gorm.Open(sqlite.Open("notes.db"), &gorm.Config{})
+	if err != nil {
+		panic("Failed to connect to database")
+	}
+	db.AutoMigrate(&models.Note{})
+
+	repo := repositories.NewNoteRepository(db)
+	service := services.NewNoteService(repo)
+	handler := handlers.NewNoteHandler(service)
+
+	r := gin.Default()
+	routes.Routes(r, handler)
+	r.Run(":3000")
 }
