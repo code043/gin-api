@@ -25,4 +25,10 @@ func (h *NoteHandler) Create(c *gin.Context) {
 		})
 		return
 	}
+	if err := h.Service.Create(&note); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create note"})
+		return
+	}
+
+	c.JSON(http.StatusCreated, note)
 }
