@@ -16,3 +16,6 @@ func NewNoteService(repo *repositories.NoteRepository) *NoteService {
 func (s *NoteService) Create(note *models.Note) error {
 	return s.Repo.Create(note)
 }
+func (s *NoteService) GetAll() ([]models.Note, error) {
+	return s.Repo.GetAll()
+}
