@@ -32,3 +32,12 @@ func (h *NoteHandler) Create(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, note)
 }
+func (h *NoteHandler) GetAll(c *gin.Context) {
+	notes, err := h.Service.GetAll()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve notes"})
+		return
+	}
+
+	c.JSON(http.StatusOK, notes)
+}
