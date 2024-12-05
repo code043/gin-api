@@ -7,4 +7,5 @@ import (
 
 func Routes(r *gin.Engine, noteHandler *handlers.NoteHandler) {
 	r.POST("/notes", noteHandler.Create)
+	r.GET("/notes", noteHandler.GetAll)
 }
