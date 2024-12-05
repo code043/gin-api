@@ -12,6 +12,11 @@ type NoteHandler struct {
 	Service *services.NoteService
 }
 
+type NoteResponse struct {
+	Quantity int         `json:"quantity"`
+	Data     interface{} `json:"data"`
+}
+
 func NewNoteHandler(service *services.NoteService) *NoteHandler {
 	return &NoteHandler{
 		Service: service,
@@ -38,6 +43,10 @@ func (h *NoteHandler) GetAll(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve notes"})
 		return
 	}
+	response := NoteResponse{
+		Quantity: len(notes),
+		Data:     notes,
+	}
 
-	c.JSON(http.StatusOK, notes)
+	c.JSON(http.StatusOK, response)
 }

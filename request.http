@@ -1,7 +1,10 @@
+get http://localhost:3000/notes
+###
+
 post http://localhost:3000/notes
 Content-Type: application/json
 
 {
-  "title": "Note 001",
+  "title": "Note 002",
   "content": "This is a body note..."
 }
