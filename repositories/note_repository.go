@@ -17,3 +17,8 @@ func NewNoteRepository(db *gorm.DB) *NoteRepository {
 func (r *NoteRepository) Create(note *models.Note) error {
 	return r.DB.Create(note).Error
 }
+func (r *NoteRepository) GetAll() ([]models.Note, error) {
+	var notes []models.Note
+	err := r.DB.Find(&notes).Error
+	return notes, err
+}
