@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/code043/gin-api/models"
 	"github.com/code043/gin-api/services"
@@ -49,4 +50,13 @@ func (h *NoteHandler) GetAll(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, response)
+}
+func (h *NoteHandler) GetByID(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	note, err := h.Service.GetByID(uint(id))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Note not found"})
+		return
+	}
+	c.JSON(http.StatusOK, note)
 }
