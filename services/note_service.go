@@ -19,3 +19,6 @@ func (s *NoteService) Create(note *models.Note) error {
 func (s *NoteService) GetAll() ([]models.Note, error) {
 	return s.Repo.GetAll()
 }
+func (s *NoteService) GetByID(id uint) (*models.Note, error) {
+	return s.Repo.GetByID(id)
+}
