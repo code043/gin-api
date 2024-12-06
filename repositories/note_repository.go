@@ -22,3 +22,8 @@ func (r *NoteRepository) GetAll() ([]models.Note, error) {
 	err := r.DB.Find(&notes).Error
 	return notes, err
 }
+func (r *NoteRepository) GetByID(id uint) (*models.Note, error) {
+	var note models.Note
+	err := r.DB.First(&note, id).Error
+	return &note, err
+}
