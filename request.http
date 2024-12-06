@@ -8,3 +8,6 @@ Content-Type: application/json
   "title": "Note 002",
   "content": "This is a body note..."
 }
+###
+get http://localhost:3000/notes/1
+###
