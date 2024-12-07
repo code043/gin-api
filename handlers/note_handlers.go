@@ -60,3 +60,12 @@ func (h *NoteHandler) GetByID(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, note)
 }
+func (h *NoteHandler) Delete(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	if err := h.Service.Delete(uint(id)); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete note"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Note deleted successfully"})
+}
