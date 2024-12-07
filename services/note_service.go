@@ -22,3 +22,7 @@ func (s *NoteService) GetAll() ([]models.Note, error) {
 func (s *NoteService) GetByID(id uint) (*models.Note, error) {
 	return s.Repo.GetByID(id)
 }
+
+func (s *NoteService) Delete(id uint) error {
+	return s.Repo.Delete(id)
+}
