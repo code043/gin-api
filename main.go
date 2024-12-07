@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/code043/gin-api/handlers"
 	"github.com/code043/gin-api/models"
 	"github.com/code043/gin-api/repositories"
@@ -24,5 +26,9 @@ func main() {
 
 	r := gin.Default()
 	routes.Routes(r, handler)
-	r.Run(":3000")
+	err = r.Run(":3000")
+	if err != nil {
+		fmt.Println("Failed to run server: ", err)
+	}
+
 }
