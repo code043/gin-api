@@ -22,6 +22,16 @@ func (s *NoteService) GetAll() ([]models.Note, error) {
 func (s *NoteService) GetByID(id uint) (*models.Note, error) {
 	return s.Repo.GetByID(id)
 }
+func (s *NoteService) Update(note *models.Note) error {
+	existingNote, err := s.GetByID(note.ID)
+	if err != nil {
+		return err
+	}
+	existingNote.Title = note.Title
+	existingNote.Content = note.Content
+
+	return s.Update(existingNote)
+}
 
 func (s *NoteService) Delete(id uint) error {
 	return s.Repo.Delete(id)
