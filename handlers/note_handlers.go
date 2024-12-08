@@ -60,6 +60,26 @@ func (h *NoteHandler) GetByID(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, note)
 }
+func (h *NoteHandler) Update(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+	var updatedNote models.Note
+	if err := c.ShouldBindJSON(&updatedNote); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	updatedNote.ID = uint(id)
+
+	if err := h.Service.Update(&updatedNote); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update note"})
+		return
+	}
+	c.JSON(http.StatusOK, updatedNote)
+}
 
 func (h *NoteHandler) Delete(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
