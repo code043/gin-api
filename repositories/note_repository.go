@@ -27,6 +27,9 @@ func (r *NoteRepository) GetByID(id uint) (*models.Note, error) {
 	err := r.DB.First(&note, id).Error
 	return &note, err
 }
+func (r *NoteRepository) UpdateByID(note *models.Note) error {
+	return r.DB.Save(note).Error
+}
 func (r *NoteRepository) Delete(id uint) error {
 	return r.DB.Delete(&models.Note{}, id).Error
 }
